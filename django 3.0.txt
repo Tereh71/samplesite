@@ -1,0 +1,75 @@
+Створення нового проекту з назвою samplesite - django-admin startproject samplesite
+Зайти в папку проекта samplesite - cd samplesite
+Запустити сервер - python manage.py runserver
+Відкрити браузер за адресою - http://127.0.0.1:8000/
+Зупинити сервер - <Ctrl>+<Break>
+
+Створення додатка з назвою bboard (перед цим зупинити сервер) - python manage.py startapp bboard
+Зареєструвати створений додаток в проекті - додати в список INSTALLED_APP створений додаток 'bboard.apps.BboardConfig', або просто 'bboard', 
+
+
+Створення контроллера, який покаже сторінку додатка bboard:
+В файлі views.py додатка bboard прописати наступне:
+from django.http import HttpResponse
+def index(request):
+	return HttpResponse("Здесь будет выведен список объявлений.")
+
+Створити файл urls.py в папці додатка bboard та прописати:
+
+from django.urls import path
+
+from .views import index
+urlpatterns = [
+    path('', index),
+]
+
+Прописати в файлі urls.py проекту urlpatterns:
+path('bboard/', include('bboard.urls')),
+
+
+Створення моделі оголошення:
+from django.db import models
+class Bb(models.Model):
+	title = models.CharField(max_length=50)
+	content = models.TextField(null=True, blank=True)
+	price = models.FloatField(null=True, blank=True)
+	published = models.DateTimeField(auto_now_add=True, db_index=True)
+
+
+Міграція - створення на основі заданої моделі відповідної структури (таблицу, поля, індекси, правила та зв'язки)
+Зупинити сервер та виконати це створення - python manage.py makemigrations bboard
+А потім виконати міграцію - python manage.py migrate
+
+Запуск консолі Python Shell - python manage.py shell
+Зупинити сервер та створити деілька оголошень через консоль Shell:
+from bboard.models import Bb 
+b1 = Bb(title='Дача', content='Общество "Двухэтажники". Два этажа, кирпич, свет, газ, канализация', price=500000) 
+зберегти об'єкт командою - b1.save()
+перевірити базу - b1.pk. Відповідь буде - 1
+
+Створення та підключення шаблона відображення оголошень:
+Створити папку templates в bboard
+Створити папку bboard в templates
+Створити файл index.html з макетом сторінки
+В файлі views.py додатка bboard виконати підключення шаблона з імпортом модуля render та бази з оголошеннями.
+
+Адміністрування веб-сайту.
+В консолі створити суперкористувача -  python manage.py createsuperuser
+Ввести логін, пошту та пароль.
+В файлі проекту settings.py змінити мовні параметри 'en-us' на 'ru'
+Запустити сервер.
+Зайти на сторінку http://127.0.0.1:8000/admin/ ввівши логін та пароль адміністратора.
+
+Реєстрація додатка bboard в адмінчастині сайту
+В файл admin.py додатка внести код:
+from .models import Bb
+admin.site.register(Bb)
+
+Параметри полів та моделей.
+Внести зміни в файл models.py для кращого відображення в адмінчастині (сторінка 50)
+Внести зміни в файд views.py (стр.50-51)
+Змінити відображення модуля в адмінчастині файл admin.py (стор51)
+
+
+
+
