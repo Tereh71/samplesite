@@ -1,0 +1,12 @@
+{% extends "layout/basic.html" %}
+
+{% block title %}Додати оголошення{% endblock %}
+
+{% block content %}
+<h2>Додати оголошення</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p}}
+  <input type="submit" value="Додати">
+</form>
+{% endblock %}

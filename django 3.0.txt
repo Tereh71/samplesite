@@ -1,3 +1,7 @@
+Частина 1
+Глава 1
+
+
 Створення нового проекту з назвою samplesite - django-admin startproject samplesite
 Зайти в папку проекта samplesite - cd samplesite
 Запустити сервер - python manage.py runserver
@@ -69,6 +73,7 @@ admin.site.register(Bb)
 Внести зміни в файл models.py для кращого відображення в адмінчастині (сторінка 50)
 Внести зміни в файд views.py (стр.50-51)
 Змінити відображення модуля в адмінчастині файл admin.py (стор51)
+
 
 
 
